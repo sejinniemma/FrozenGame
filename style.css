@@ -15,6 +15,15 @@ body {
     height: 100vh;
 }
 
+.game__field > .olaf {
+    width: 100px;
+    height: 130px;
+}
+
+.game__field > .fire {
+    width: 80px;
+    height: 80px;
+}
 p,span {
     cursor:default;
 }
@@ -82,7 +91,6 @@ button:hover {
 
 }
 
-
 .game__score {
     background-color: deeppink;
     border-radius: 50%;
@@ -95,6 +103,7 @@ button:hover {
 }
 
 .game__field{
+    position: relative;
     height: 350px;
 }
 
