@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(67, 82, 118);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Indie Flower', cursive;
+    height: 100vh;
+}
+
+p,span {
+    cursor:default;
+}
+
+button {
+    outline: none;
+    cursor: pointer;
+    transition: transform 0.5s ease-out;
+}
+
+button:hover {
+    transform: scale(1.1);
+    color: tomato;
+   
+}
+
+.game__logo p {
+    font-weight: 900;
+    font-size: 70px;
+}
+
+.game {
+    background: url(/img/bg.jpg) no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+    height: 700px;
+    border-radius: 8px;
+    border: 3px solid white;
+}
+
+.game__header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    height: 350px;
+    font-size: 40px;
+    color: wheat;
+    padding-top: 4%;
+    row-gap: 10px;
+}
+
+.game__button {
+    background-color: wheat;
+    font-size: 40px;
+    border:5px dotted black; 
+    border-style:dashed;
+    width: 100px;
+    height: 70px;
+    border-radius: 5px;
+}
+
+.game__timer {
+    border: 5px dotted black;
+    border-style: dashed;
+    border-radius: 5px;
+    background-color: deepskyblue;
+    height: 40px;
+    width: 100px;
+    text-align: center;
+    line-height:30px;
+
+}
+
+
+.game__score {
+    background-color: deeppink;
+    border-radius: 50%;
+    border: 5px dotted black;
+    border-style: dashed;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.game__field{
+    height: 350px;
+}
+
+.pop-up {
+    display: none;
+}

@@ -7,8 +7,30 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
+    <script src="https://kit.fontawesome.com/8607ff6224.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    
+    <section class="game__logo">
+        <img src="img/OlafLogo.png" alt="Olaf">
+        <p>Save me!</p>
+    </section>
+
+    <section class="game">
+        <header class="game__header">
+            <button class="game__button">
+                <i class="fa-solid fa-play"></i>
+            </button>
+            <span class="game__timer">0 : 0</span>
+            <span class="game__score">9</span>
+        </header>
+        <section class="game__field"></section>
+    </section>
+
+    <section class="pop-up">
+        <button class="pop-up__refresh">
+            <i class="fa-solid fa-arrow-rotate-right"></i>
+        </button>
+        <span class="pop-up__message">Hello</span>
+    </section>
 </body>
 </html>
