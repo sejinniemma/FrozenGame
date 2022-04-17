@@ -7,7 +7,7 @@ const fieldHeight = gameField.getBoundingClientRect().height;
 const gameScore = document.querySelector('.game__score');
 const gameTimer = document.querySelector('.game__timer');
 const popUp = document.querySelector('.pop-up');
-const olafCount = 10;
+const olafCount =10;
 const fireCount = 10;
 const olafWidth = 100;
 const olafHeight = 130;
@@ -15,11 +15,12 @@ const gameDuration = 10;
 
 let started = false;
 let timer;
+let score = 0;
 
 gameBtn.addEventListener('click',()=>{
     if(!started){
         startGame();
-    }else finishGame();
+    }else stopGame();
 });
 
 function startGame(){
@@ -28,9 +29,10 @@ function startGame(){
     showPauseBtn();
     startGameTimer();
     showGameScore();
+    gameScore.textContent = olafCount;
 }
 
-function finishGame(){
+function stopGame(){
     started = false;
     showPopUpMessage('Replay ?');
     stopGameTimer();
@@ -63,11 +65,12 @@ function startGameTimer(){
     
     timer = setInterval(() => {
         showMinuteAndSeconds(--remainingSec);
+        if(remainingSec === 0){
+            finishGame(score===olafCount);
+        }
         }, 1000);
 
-        if(remainingSec === 0){
-            clearInterval(timer)
-        }
+      
 }
 
 function showMinuteAndSeconds(sec){
@@ -105,3 +108,35 @@ function initGame(className,count,imgPath){
 function randomNumber(min, max){
     return Math.random() * (max - min) + min;
 }
+
+
+gameField.addEventListener('click',onClickField);
+
+function onClickField(event){
+    if(!started){
+        return;
+    }
+    const target = event.target;
+    if(target.matches('.olaf')){
+        target.remove();
+        score++;
+        updateScoreBoard(score);
+        if(score === olafCount){
+            finishGame(true);
+        }
+    } else if(target.matches('.fire')){
+        finishGame(false);
+    }
+}
+
+function finishGame(win){
+    started = false;
+    stopGameTimer();
+    hideGameBtn();
+    win ? showPopUpMessage('You win') : showPopUpMessage('You loose');
+}
+
+function updateScoreBoard(score){
+    gameScore.textContent = olafCount - score;
+}
+
