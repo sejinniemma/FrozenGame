@@ -4,12 +4,54 @@ const gameBtn = document.querySelector('.game__button');
 const gameField = document.querySelector('.game__field');
 const fieldWidth = gameField.getBoundingClientRect().width;
 const fieldHeight = gameField.getBoundingClientRect().height;
+const gameScore = document.querySelector('.game__score');
+const gameTimer = document.querySelector('.game__timer');
 const olafCount = 10;
 const fireCount = 10;
 const olafWidth = 100;
 const olafHeight = 130;
+const gameDuration = 10;
 
-gameBtn.addEventListener('click',onAdd);
+let started = false;
+let timer;
+gameBtn.addEventListener('click',startGame);
+
+function startGame(){
+    started = true;
+    onAdd();
+    showPauseBtn();
+    startGameTimer();
+    showGameScore();
+}
+
+
+
+function showPauseBtn (){
+    const changed = document.querySelector('.fa-play');
+    changed.setAttribute('class','fa-solid fa-pause');
+}
+
+function showGameScore (){
+    gameScore.style.visibility='visible';
+}
+
+function startGameTimer(){
+    gameTimer.style.visibility = 'visible';
+    let remainingSec = gameDuration;
+    showMinuteAndSeconds(remainingSec);
+    
+    timer = setInterval(() => {
+        --remainingSec;
+        }, 1000);
+        showMinuteAndSeconds(remainingSec);
+}
+
+function showMinuteAndSeconds(sec){
+    const minute = Math.floor(sec / 60);
+    const seconds = Math.floor(sec % 60);
+    return gameTimer.textContent = `${minute} : ${seconds}`
+}
+
 
 function onAdd(){
     initGame('olaf', olafCount , 'img/olaf.png');

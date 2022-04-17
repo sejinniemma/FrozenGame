@@ -80,6 +80,7 @@ button:hover {
 }
 
 .game__timer {
+    visibility: hidden;
     border: 5px dotted black;
     border-style: dashed;
     border-radius: 5px;
@@ -92,6 +93,7 @@ button:hover {
 }
 
 .game__score {
+    visibility: hidden;
     background-color: deeppink;
     border-radius: 50%;
     border: 5px dotted black;
