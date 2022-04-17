@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Indie Flower', cursive;
-    height: 100vh;
+    height: 130vh;
 }
 
 .game__field > .olaf {
@@ -40,9 +40,22 @@ button:hover {
    
 }
 
+.game__logo {
+    padding-bottom: 100px;
+}
+
 .game__logo p {
     font-weight: 900;
     font-size: 70px;
+}
+
+.game__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    
 }
 
 .game {
@@ -110,5 +123,33 @@ button:hover {
 }
 
 .pop-up {
-    display: none;
+    background-color: rgba(230, 186, 90, 0.5);
+    color: white;
+    width: 600px;
+    height: 240px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 10px;
+    transform: translateY(-150%);
+    border-radius: 8px;
+    visibility: hidden;
+}
+
+.pop-up__refresh {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    font-weight: 900;
+    background-color: wheat;
+    border: 4px dotted black;
+    border-style: dashed;
+    border-radius: 50%;
+}
+
+.pop-up__message{
+    display: block;
+    font-size: 50px;
 }
