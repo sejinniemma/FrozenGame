@@ -1,5 +1,4 @@
 export default class PopUp {
-
     constructor(){
         this.popUp = document.querySelector('.pop-up');
         this.popUpMessage = document.querySelector('.pop-up__message');
