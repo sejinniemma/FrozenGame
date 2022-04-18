@@ -7,6 +7,13 @@ const fieldHeight = gameField.getBoundingClientRect().height;
 const gameScore = document.querySelector('.game__score');
 const gameTimer = document.querySelector('.game__timer');
 const popUp = document.querySelector('.pop-up');
+const popUpRefresh = document.querySelector('.pop-up__refresh');
+
+const olafSound = playSound('./sound/Olaf_pull.mp3');
+const fireSound = playSound('./sound/fire_pull.mp3');
+const alertSound = playSound('./sound/alert.wav');
+const bgSound = playSound('./sound/bg3.zip');
+
 const olafCount =10;
 const fireCount = 10;
 const olafWidth = 100;
@@ -24,7 +31,10 @@ gameBtn.addEventListener('click',()=>{
 });
 
 function startGame(){
+    bgSound.play()
     started = true;
+    score = 0;
+    gameField.innerHTML ='';
     onAdd();
     showPauseBtn();
     startGameTimer();
@@ -37,6 +47,7 @@ function stopGame(){
     showPopUpMessage('Replay ?');
     stopGameTimer();
     hideGameBtn();
+    alertSound.play();
 }
 
 function showPopUpMessage(text){
@@ -45,9 +56,14 @@ function showPopUpMessage(text){
     popUpMessage.textContent = text;
 }
 
+function hidePopUp(){
+    popUp.style.visibility = 'hidden';
+}
+
 function showPauseBtn (){
-    const changed = document.querySelector('.fa-play');
-    changed.setAttribute('class','fa-solid fa-pause');
+    const changedBtn = document.querySelector('.fa-solid');
+    changedBtn.classList.add('fa-pause');
+    changedBtn.classList.remove('fa-play');
 }
 
 function hideGameBtn (){
@@ -119,6 +135,7 @@ function onClickField(event){
     const target = event.target;
     if(target.matches('.olaf')){
         target.remove();
+        olafSound.play();
         score++;
         updateScoreBoard(score);
         if(score === olafCount){
@@ -126,6 +143,7 @@ function onClickField(event){
         }
     } else if(target.matches('.fire')){
         finishGame(false);
+        fireSound.play()
     }
 }
 
@@ -140,3 +158,14 @@ function updateScoreBoard(score){
     gameScore.textContent = olafCount - score;
 }
 
+popUpRefresh.addEventListener('click',()=>{
+    hidePopUp();
+    startGame();
+});
+
+
+
+function playSound(url){
+  const audio = new Audio(url);
+  return audio;
+}
