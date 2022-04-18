@@ -1,5 +1,3 @@
-const olafSound = playSound('./sound/Olaf_pull.mp3');
-const fireSound = playSound('./sound/fire_pull.mp3');
 
 export default class Field {
     constructor(olafCount,fireCount){
@@ -10,7 +8,6 @@ export default class Field {
         this.fireCount = 10;
         this.olafWidth = 100;
         this.olafHeight = 130;
-
         this.gameField.addEventListener('click',this.onClick);
     }
 
@@ -45,22 +42,15 @@ export default class Field {
         const target = event.target;
         if(target.matches('.olaf')){
             target.remove();
-            olafSound.play();
             this.onItemClick && this.onItemClick('olaf')
         } else if(target.matches('.fire')){
-            fireSound.play()
             this.onItemClick && this.onItemClick('fire')
         }
     }
     
-   
 }
 
 function randomNumber(min, max){
     return Math.random() * (max - min) + min;
 }
 
-function playSound(url){
-    const audio = new Audio(url);
-    return audio;
-  }

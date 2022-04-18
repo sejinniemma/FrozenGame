@@ -1,7 +1,8 @@
 'use strict';
 import Field from './field.js';
 import PopUp from './popUp.js';
-const alertSound = playSound('./sound/alert.wav');
+import * as sound from './sound.js';
+
 const gameBtn = document.querySelector('.game__button');
 const gameScore = document.querySelector('.game__score');
 const gameTimer = document.querySelector('.game__timer');
@@ -24,6 +25,7 @@ function onItemClick(item){
         return;
     }
     if(item === 'olaf'){
+        sound.playOlaf();
         score++;
         updateScoreBoard(score);
         if(score === olafCount){
@@ -31,6 +33,7 @@ function onItemClick(item){
         }
     } else if(item === 'fire'){
         finishGame(false);
+        sound.playFire();
     }
 }
 
@@ -64,7 +67,7 @@ function stopGame(){
     gameFinishBanner.showWithText('Replay ?');
     stopGameTimer();
     hideGameBtn();
-    alertSound.play();
+    sound.playAlert();
 }
 
 
@@ -118,7 +121,3 @@ function finishGame(win){
 
 
 
-function playSound(url){
-    const audio = new Audio(url);
-    return audio;
-  }
