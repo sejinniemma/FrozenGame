@@ -1,6 +1,6 @@
 'use strict';
 
-import GameBuilder from './game.js';
+import{ GameBuilder,Reason} from './game.js';
 import PopUp from './popUp.js';
 
 
@@ -13,15 +13,17 @@ const game = new GameBuilder()
 game.setStopListhener((result)=>{
     let text;
     switch (result) {
-        case 'win':
+        case Reason.win:
             text = 'You won'
             break;
-        case 'loose':
-       text = 'You loose'
+        case Reason.lose:
+            text = 'You loose'
             break;
-        case 'cancel':
+        case Reason.cancel:
             text = 'Replay ?'
-            break
+            break;
+            default:
+             throw new Error('not valid reason')
     }
 
     gameFinishBanner.showWithText(text);

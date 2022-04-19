@@ -1,7 +1,13 @@
 import Field from './field.js';
 import * as sound from './sound.js';
 
-export default class GameBuilder{
+export const Reason = Object.freeze({
+    win:'win',
+    lose:'lose',
+    cancel:'cancel',
+})
+
+export class GameBuilder{
     
     withGameDuration(duration){
         this.gameDuration = duration;
@@ -89,7 +95,7 @@ export default class GameBuilder{
 
             stop(){
                 this.started = false;
-                this.onGameStop && this.onGameStop('cancel');
+                this.onGameStop && this.onGameStop(Reason.cancel);
                 this.stopGameTimer();
                 this.hideGameBtn();
                 sound.playAlert();
@@ -138,6 +144,6 @@ export default class GameBuilder{
                 this.started = false;
                 this.stopGameTimer();
                 this.hideGameBtn();
-                this.onGameStop && this.onGameStop(win ? 'win' : 'loose');
+                this.onGameStop && this.onGameStop(win ? Reason.win : Reason.lose);
             }
         }
