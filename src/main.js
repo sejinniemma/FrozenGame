@@ -1,7 +1,8 @@
 'use strict';
 
-import{ GameBuilder,Reason} from './game.js';
+import { GameBuilder, Reason } from './game.js';
 import PopUp from './popUp.js';
+import * as sound from './sound.js';
 
 
 const game = new GameBuilder()
@@ -21,6 +22,7 @@ game.setStopListhener((result)=>{
             break;
         case Reason.cancel:
             text = 'Replay ?'
+            sound.playAlert();
             break;
             default:
              throw new Error('not valid reason')

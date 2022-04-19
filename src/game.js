@@ -1,6 +1,7 @@
 import Field from './field.js';
 import * as sound from './sound.js';
 
+
 export const Reason = Object.freeze({
     win:'win',
     lose:'lose',
@@ -48,7 +49,7 @@ export class GameBuilder{
         this.gameBtn.addEventListener('click',()=>{
             if(!this.started){
                 this.start();
-            } else this.stop();
+            } else this.finish(Reason.cancel);
         });
     }
 
@@ -65,10 +66,10 @@ export class GameBuilder{
             this.score++;
             this.updateScoreBoard(this.score);
             if(this.score === this.olafCount){
-                this.finishGame(true);
+                this.finish(Reason.win);
             }
         } else if(item === 'fire'){
-            this.finishGame(false);
+            this.finish(Reason.lose);
             sound.playFire();
         }
     }
@@ -77,42 +78,39 @@ export class GameBuilder{
         this.gameScore.textContent = this.olafCount - this.score;
     }
     
+    start(){
+        this.started = true;
+        this.showPauseBtn();
+        this.initGame()
+        this.startGameTimer();
+        this.showGameScore();
+        }
 
-            start(){
-                this.started = true;
-                this.showPauseBtn();
-                this.initGame()
-                this.startGameTimer();
-                this.showGameScore();
-                
-            }
+    initGame(){
+        this.score = 0;
+        this.gameScore.textContent = this.olafCount;
+        this.gameField.init();
+        }
 
-            initGame(){
-                this.score = 0;
-                this.gameScore.textContent = this.olafCount;
-                this.gameField.init();
-            }
-
-            stop(){
-                this.started = false;
-                this.onGameStop && this.onGameStop(Reason.cancel);
-                this.stopGameTimer();
-                this.hideGameBtn();
-                sound.playAlert();
-            }
+    finish(reason){
+        this.started = false;
+        this.stopGameTimer();
+        this.hideGameBtn();
+        this.onGameStop && this.onGameStop(reason);
+        }
 
 
-            showPauseBtn (){
+         showPauseBtn (){
                 const changedBtn = document.querySelector('.fa-solid');
                 changedBtn.classList.add('fa-pause');
                 changedBtn.classList.remove('fa-play');
             }
 
-            hideGameBtn (){
+         hideGameBtn (){
                 this.gameBtn.style.visibility ='hidden';
             }
 
-            showGameScore (){
+         showGameScore (){
                 this.gameScore.style.visibility='visible';
             }
 
@@ -124,26 +122,19 @@ export class GameBuilder{
                 this.timer = setInterval(() => {
                     this.showMinuteAndSeconds(--remainingSec);
                     if(remainingSec === 0){
-                        this.finishGame(this.score===this.olafCount);
+                        this.finish(this.score===this.olafCount?Reason.win:Reason.lose);
                     }
                     }, 1000);
             }
 
-            showMinuteAndSeconds(sec){
+         showMinuteAndSeconds(sec){
                 const minute = Math.floor(sec / 60);
                 const seconds = Math.floor(sec % 60);
                 return this.gameTimer.textContent = `${minute} : ${seconds}`
             }
 
-            stopGameTimer(){
+        stopGameTimer(){
                 clearInterval(this.timer);
             }
 
-
-            finishGame(win){
-                this.started = false;
-                this.stopGameTimer();
-                this.hideGameBtn();
-                this.onGameStop && this.onGameStop(win ? Reason.win : Reason.lose);
-            }
         }
