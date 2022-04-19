@@ -1,4 +1,4 @@
-import Field from './field.js';
+import {Field,  ItemType } from './field.js';
 import * as sound from './sound.js';
 
 
@@ -7,6 +7,7 @@ export const Reason = Object.freeze({
     lose:'lose',
     cancel:'cancel',
 })
+
 
 export class GameBuilder{
     
@@ -61,14 +62,14 @@ export class GameBuilder{
         if(!this.started){
             return;
         }
-        if(item === 'olaf'){
+        if(item === ItemType.olaf){
             sound.playOlaf();
             this.score++;
             this.updateScoreBoard(this.score);
             if(this.score === this.olafCount){
                 this.finish(Reason.win);
             }
-        } else if(item === 'fire'){
+        } else if(item === ItemType.fire){
             this.finish(Reason.lose);
             sound.playFire();
         }

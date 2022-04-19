@@ -1,5 +1,10 @@
 
-export default class Field {
+export const ItemType = Object.freeze({
+    olaf : 'olaf',
+    fire : 'fire',
+})
+
+export class Field {
     constructor(olafCount,fireCount){
         this.gameField = document.querySelector('.game__field');
         this.fieldWidth = this.gameField.getBoundingClientRect().width;
@@ -42,9 +47,9 @@ export default class Field {
         const target = event.target;
         if(target.matches('.olaf')){
             target.remove();
-            this.onItemClick && this.onItemClick('olaf')
+            this.onItemClick && this.onItemClick(ItemType.olaf)
         } else if(target.matches('.fire')){
-            this.onItemClick && this.onItemClick('fire')
+            this.onItemClick && this.onItemClick(ItemType.fire)
         }
     }
     
