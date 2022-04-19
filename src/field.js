@@ -4,8 +4,8 @@ export default class Field {
         this.gameField = document.querySelector('.game__field');
         this.fieldWidth = this.gameField.getBoundingClientRect().width;
         this.fieldHeight = this.gameField.getBoundingClientRect().height;
-        this.olafCount = 10;
-        this.fireCount = 10;
+        this.olafCount = olafCount;
+        this.fireCount = fireCount;
         this.olafWidth = 100;
         this.olafHeight = 130;
         this.gameField.addEventListener('click',this.onClick);
