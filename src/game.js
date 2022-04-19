@@ -1,7 +1,30 @@
 import Field from './field.js';
 import * as sound from './sound.js';
 
-export default class Game {
+export default class GameBuilder{
+    
+    withGameDuration(duration){
+        this.gameDuration = duration;
+        return this;
+    }
+    withOlafCount(num){
+        this.olafCount = num;
+        return this;
+    }
+    withFireCount(num){
+        this.fireCount = num;
+        return this;
+    }
+    build(){
+        return new Game(
+            this.gameDuration,
+            this.olafCount,
+            this.fireCount
+        )
+    }
+}
+
+ class Game {
     constructor(gameDuration,olafCount,fireCount){
         this.gameBtn = document.querySelector('.game__button');
         this.gameScore = document.querySelector('.game__score');

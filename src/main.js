@@ -1,14 +1,15 @@
 'use strict';
 
-import Game from './game.js';
+import GameBuilder from './game.js';
 import PopUp from './popUp.js';
 
 
-const olafCount = 10;
-const fireCount= 10;
-const gameDuration = 10;
+const game = new GameBuilder()
+.withGameDuration(10)
+.withOlafCount(10)
+.withFireCount(10)
+.build();
 
-const game = new Game(gameDuration,olafCount,fireCount);
 game.setStopListhener((result)=>{
     let text;
     switch (result) {
