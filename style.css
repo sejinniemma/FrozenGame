@@ -132,7 +132,7 @@ button:hover {
     height: 80px;
 }
 
-.pop-up {
+.pop-up{
     background-color: rgba(230, 186, 90, 0.5);
     color: black;
     width: 600px;
@@ -147,6 +147,7 @@ button:hover {
     border-radius: 8px;
     visibility: hidden;
 }
+
 
 .pop-up__refresh {
     width: 60px;

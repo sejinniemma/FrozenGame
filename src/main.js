@@ -1,4 +1,5 @@
 'use strict';
+import PopUp from "./popup.js";
 
 const gameBtn = document.querySelector('.game__button');
 const gameField = document.querySelector('.game__field');
@@ -6,8 +7,6 @@ const fieldWidth = gameField.getBoundingClientRect().width;
 const fieldHeight = gameField.getBoundingClientRect().height;
 const gameScore = document.querySelector('.game__score');
 const gameTimer = document.querySelector('.game__timer');
-const popUp = document.querySelector('.pop-up');
-const popUpRefresh = document.querySelector('.pop-up__refresh');
 
 const olafSound = playSound('./sound/Olaf_pull.mp3');
 const fireSound = playSound('./sound/fire_pull.mp3');
@@ -23,6 +22,11 @@ const gameDuration = 10;
 let started = false;
 let timer;
 let score = 0;
+
+const gameFinishBanner = new PopUp();
+gameFinishBanner.setClickListener(()=>{
+    startGame();
+})
 
 gameBtn.addEventListener('click',()=>{
     if(!started){
@@ -44,21 +48,12 @@ function startGame(){
 
 function stopGame(){
     started = false;
-    showPopUpMessage('Replay ?');
+    gameFinishBanner.showWithText('Replay ?');
     stopGameTimer();
     hideGameBtn();
     alertSound.play();
 }
 
-function showPopUpMessage(text){
-    popUp.style.visibility = 'visible';
-    const popUpMessage = document.querySelector('.pop-up__message');
-    popUpMessage.textContent = text;
-}
-
-function hidePopUp(){
-    popUp.style.visibility = 'hidden';
-}
 
 function showPauseBtn (){
     const changedBtn = document.querySelector('.fa-solid');
@@ -151,17 +146,12 @@ function finishGame(win){
     started = false;
     stopGameTimer();
     hideGameBtn();
-    win ? showPopUpMessage('You win') : showPopUpMessage('You loose');
+    win ? gameFinishBanner.showWithText('You win') : gameFinishBanner.showWithText('You loose');
 }
 
 function updateScoreBoard(score){
     gameScore.textContent = olafCount - score;
 }
-
-popUpRefresh.addEventListener('click',()=>{
-    hidePopUp();
-    startGame();
-});
 
 
 
