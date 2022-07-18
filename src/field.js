@@ -18,11 +18,11 @@ export default class Field {
 
   init() {
     this.field.innerHTML = '';
-    this.addItem('olaf', this.olafCount, 'img/olaf.png');
-    this.addItem('fire', this.fireCount, 'img/fire.png');
+    this.#addItem('olaf', this.olafCount, 'img/olaf.png');
+    this.#addItem('fire', this.fireCount, 'img/fire.png');
   }
 
-  addItem(className, count, imgPath) {
+  #addItem(className, count, imgPath) {
     const x1 = 0;
     const y1 = 0;
     const x2 = this.fieldWidth - this.olafWidth;

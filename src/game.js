@@ -2,8 +2,15 @@
 import Field from './field.js';
 import * as sound from './sound.js';
 
+// Type assurance
+export const Reason = Object.freeze({
+  win: 'win',
+  loose: 'loose',
+  cancel: 'cancel',
+});
+
 // bulider pattern
-export default class GameBuilder {
+export class GameBuilder {
   gameDuration(duration) {
     this.duration = duration;
     return this;
@@ -50,7 +57,7 @@ class Game {
       if (!this.started) {
         this.start();
       } else {
-        this.stop();
+        this.finish();
       }
     });
   }
@@ -69,12 +76,12 @@ class Game {
     sound.playBg();
   }
 
-  stop() {
+  finish(reason) {
     this.started = false;
     this.stopGameTimer();
     this.hideGameBtn();
-    sound.playAlert();
-    this.onGameStop && this.onGameStop('cancel');
+    this.onGameStop && this.onGameStop(reason);
+    sound.stopBg();
   }
 
   initGame() {
@@ -105,7 +112,7 @@ class Game {
     this.timer = setInterval(() => {
       this.showMinuteAndSeconds(--remainingSec);
       if (remainingSec === 0) {
-        this.finish(this.score === this.olafCount);
+        this.finish(this.score === this.olafCount ? Reason.win : Reason.loose);
       }
     }, 1000);
   }
@@ -120,14 +127,6 @@ class Game {
     clearInterval(this.timer);
   }
 
-  finish(win) {
-    this.started = false;
-    this.stopGameTimer();
-    this.hideGameBtn();
-    this.onGameStop && this.onGameStop(win ? 'win' : 'loose');
-    sound.stopBg();
-  }
-
   onClickField = (item) => {
     if (!this.started) {
       return;
@@ -136,10 +135,10 @@ class Game {
       this.score++;
       this.updateScoreBoard(this.score);
       if (this.score === this.olafCount) {
-        this.finish(true);
+        this.finish(Reason.win);
       }
     } else if (item === 'fire') {
-      this.finish(false);
+      this.finish(Reason.loose);
     }
   };
 
