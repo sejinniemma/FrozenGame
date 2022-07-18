@@ -2,13 +2,35 @@
 import Field from './field.js';
 import * as sound from './sound.js';
 
-export default class Game {
-  constructor(gameDuration, olafCount, fireCount, olafWidth, olafHeight) {
+// bulider pattern
+export default class GameBuilder {
+  gameDuration(duration) {
+    this.duration = duration;
+    return this;
+  }
+
+  olafCount(num) {
+    this.olafCount = num;
+    return this;
+  }
+
+  fireCount(num) {
+    this.fireCount = num;
+    return this;
+  }
+
+  build() {
+    return new Game(this.duration, this.olafCount, this.fireCount);
+  }
+}
+
+class Game {
+  constructor(gameDuration, olafCount, fireCount) {
     this.gameDuration = gameDuration;
     this.olafCount = olafCount;
     this.fireCount = fireCount;
-    this.olafWidth = olafWidth;
-    this.olafHeight = olafHeight;
+    this.olafWidth = 100;
+    this.olafHeight = 130;
     this.started = false;
     this.timer;
     this.score = 0;
@@ -16,7 +38,12 @@ export default class Game {
     this.gameScore = document.querySelector('.game__score');
     this.gameTimer = document.querySelector('.game__timer');
 
-    this.gameField = new Field(olafCount, fireCount, olafWidth, olafHeight);
+    this.gameField = new Field(
+      olafCount,
+      fireCount,
+      this.olafWidth,
+      this.olafHeight
+    );
     this.gameField.setClickListener(this.onClickField);
 
     this.gameBtn.addEventListener('click', () => {
@@ -39,6 +66,7 @@ export default class Game {
     this.showPauseBtn();
     this.startGameTimer();
     this.showGameScore();
+    sound.playBg();
   }
 
   stop() {
@@ -97,6 +125,7 @@ export default class Game {
     this.stopGameTimer();
     this.hideGameBtn();
     this.onGameStop && this.onGameStop(win ? 'win' : 'loose');
+    sound.stopBg();
   }
 
   onClickField = (item) => {

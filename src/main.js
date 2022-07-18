@@ -1,25 +1,15 @@
 'use strict';
 import PopUp from './popup.js';
-import Game from './game.js';
-
-const olafCount = 10;
-const fireCount = 20;
-const olafWidth = 100;
-const olafHeight = 130;
-const gameDuration = 10;
+import * as sound from './sound.js';
+import GameBuilder from './game.js';
 
 const gameFinishBanner = new PopUp();
-gameFinishBanner.setClickListener(() => {
-  game.start();
-});
+const game = new GameBuilder() //
+  .gameDuration(10)
+  .olafCount(4)
+  .fireCount(20)
+  .build();
 
-const game = new Game(
-  gameDuration,
-  olafCount,
-  fireCount,
-  olafWidth,
-  olafHeight
-);
 game.setGameStopListener(showResult);
 
 function showResult(reason) {
@@ -27,6 +17,7 @@ function showResult(reason) {
   switch (reason) {
     case 'win':
       message = 'YOU WON🎁';
+      sound.playWin();
       break;
     case 'loose':
       message = 'YOU LOST💩';
@@ -40,3 +31,7 @@ function showResult(reason) {
 
   gameFinishBanner.showWithText(message);
 }
+
+gameFinishBanner.setClickListener(() => {
+  game.start();
+});
