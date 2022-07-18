@@ -11,6 +11,16 @@ export const Reason = Object.freeze({
 
 // bulider pattern
 export class GameBuilder {
+  level(lev) {
+    this.level = lev;
+    if (this.level === 'difficult') {
+      this.duration = this.duration / 2;
+      this.olafCount = this.olafCount * 2;
+      this.fireCount = this.fireCount * 2;
+    }
+    return this;
+  }
+
   gameDuration(duration) {
     this.duration = duration;
     return this;
@@ -67,7 +77,6 @@ class Game {
   }
 
   start() {
-    // bgSound.play();
     this.started = true;
     this.initGame();
     this.showPauseBtn();
