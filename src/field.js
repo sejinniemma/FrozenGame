@@ -1,6 +1,12 @@
 'use strict';
 import * as sound from './sound.js';
-export default class Field {
+
+export const ItemType = Object.freeze({
+  olaf: 'olaf',
+  fire: 'fire',
+});
+
+export class Field {
   constructor(olafCount, fireCount, olafWidth, olafHeight) {
     this.olafCount = olafCount;
     this.fireCount = fireCount;
@@ -37,7 +43,7 @@ export default class Field {
       item.style.top = `${randomNumber(y1, y2)}px`;
       this.field.appendChild(item);
 
-      if (className === 'fire') {
+      if (className === ItemType.fire) {
         let k = randomNumber(x1, x2);
         let i = randomNumber(y1, y2);
         item.animate([{ left: `${k}px` }, { top: `${i}px` }], {
@@ -53,9 +59,9 @@ export default class Field {
     if (target.matches('.olaf')) {
       target.remove();
       sound.playOlaf();
-      this.onItemClick && this.onItemClick('olaf');
+      this.onItemClick && this.onItemClick(ItemType.olaf);
     } else if (target.matches('.fire')) {
-      this.onItemClick && this.onItemClick('fire');
+      this.onItemClick && this.onItemClick(ItemType.fire);
       sound.playFire();
     }
   };

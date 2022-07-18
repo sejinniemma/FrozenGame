@@ -1,5 +1,5 @@
 'use strict';
-import Field from './field.js';
+import { Field, ItemType } from './field.js';
 import * as sound from './sound.js';
 
 // Type assurance
@@ -131,13 +131,13 @@ class Game {
     if (!this.started) {
       return;
     }
-    if (item === 'olaf') {
+    if (item === ItemType.olaf) {
       this.score++;
       this.updateScoreBoard(this.score);
       if (this.score === this.olafCount) {
         this.finish(Reason.win);
       }
-    } else if (item === 'fire') {
+    } else if (item === ItemType.fire) {
       this.finish(Reason.loose);
     }
   };
