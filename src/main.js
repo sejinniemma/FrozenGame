@@ -3,40 +3,39 @@ import PopUp from './popup.js';
 import * as sound from './sound.js';
 import { GameBuilder, Reason } from './game.js';
 
-let whichOne;
-choose('easy');
 const gameFinishBanner = new PopUp();
-function choose(lev) {
+let game;
+chooseLev('easy');
+
+function chooseLev(lev) {
   if (lev === 'easy') {
-    const game = new GameBuilder() //
+    const easyVersion = new GameBuilder() //
       .gameDuration(10)
       .olafCount(4)
       .fireCount(20)
       .build();
-    whichOne = game;
+    game = easyVersion;
   } else if (lev === 'difficult') {
-    const levelUp = new GameBuilder() //
+    const difficultVersion = new GameBuilder() //
       .gameDuration(5)
       .olafCount(10)
       .fireCount(30)
       .build();
-    whichOne = levelUp;
+    game = difficultVersion;
   }
 
-  return whichOne;
+  return game;
 }
 
-console.log(whichOne);
-
-whichOne.setGameStopListener(showResult);
+game.setGameStopListener(showResult);
 
 function showResult(reason) {
   let message;
   switch (reason) {
     case Reason.win:
       message = 'YOU WON🎁';
-      choose('difficult');
       sound.playWin();
+      chooseLev('difficult');
       break;
     case Reason.loose:
       message = 'YOU LOST💩';
@@ -53,5 +52,5 @@ function showResult(reason) {
 }
 
 gameFinishBanner.setClickListener(() => {
-  whichOne.start();
+  game.start();
 });
